@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Leaflet Map with Data from JSON</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 600px;
+            width: 100%;
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+    // Initialize a plain Leaflet map (no base layer)
+    var map = L.map('map', {
+        crs: L.CRS.Simple,
+        minZoom: -2
+    });
+
+    // Define custom bounds (adjust to fit your data)
+    var bounds = [[-100, -100], [100, 100]];
+    map.fitBounds(bounds);
+
+    // Load JSON data dynamically
+    fetch('locations.json')
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(function (game) {
+                // Define a custom image icon
+                var icon = L.icon({
+                    iconUrl: game.image_path,
+                    iconSize: [50, 50],
+                    iconAnchor: [25, 25],
+                    popupAnchor: [0, -25]
+                });
+
+                // Add marker to the map
+                L.marker([game.x, game.y], { icon: icon })
+                    .bindPopup(`<b>${game.title}</b><br><img src="${game.image_path}" width="100px">`)
+                    .addTo(map);
+            });
+        })
+        .catch(error => console.error('Error loading JSON:', error));
+</script>
+
+</body>
+</html>
