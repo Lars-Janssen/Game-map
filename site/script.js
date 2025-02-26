@@ -5,13 +5,13 @@ var map = L.map('map', {
     maxZoom: 10, // Prevent extreme zooming in
 });
 
-var bounds = [[-70, -70], [70, 70]]; // Your custom bounds
+var bounds = [[-80, -80], [80, 80]]; // Your custom bounds
 map.fitBounds(bounds);
 map.setMaxBounds(bounds); // Restrict movement beyond bounds
 
 
 // Define the pixel size of one unit on the map
-var pixel_length = 2 / 400;  // Size of one pixel in the map
+var pixel_length = 1.25 / 400;  // Size of one pixel in the map
 
 // Load CSV file
 Papa.parse("data/final_locations.csv", {
